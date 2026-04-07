@@ -1,16 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { runBenchmark } from '~/domains/benchmark/engine'
 import { ValidationError } from '~/lib/errors'
-import { benchmarkRequestSchema } from '~/lib/validators'
+import { publicBenchmarkRequestSchema } from '~/lib/validators'
 
 export const Route = createFileRoute('/api/benchmark/stream')({
 	server: {
 		handlers: {
 			POST: async ({ request }) => {
-				let parsed: ReturnType<typeof benchmarkRequestSchema.parse>
+				let parsed: ReturnType<typeof publicBenchmarkRequestSchema.parse>
 				try {
 					const body = await request.json()
-					parsed = benchmarkRequestSchema.parse(body)
+					parsed = publicBenchmarkRequestSchema.parse(body)
 				} catch (error) {
 					const message = error instanceof Error ? error.message : 'Invalid request body'
 					return new Response(JSON.stringify(new ValidationError(message).toJSON()), {

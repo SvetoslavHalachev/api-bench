@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
-import { Activity } from 'lucide-react'
+import { Activity, Moon, Sun } from 'lucide-react'
 import { Button } from '~/components/ui/button'
+import { useTheme } from '~/lib/theme'
 
 function GitHubIcon({ className }: { className?: string }) {
 	return (
@@ -17,6 +18,8 @@ function GitHubIcon({ className }: { className?: string }) {
 }
 
 export function Header() {
+	const { theme, toggleTheme } = useTheme()
+
 	return (
 		<header className="border-b border-border/50">
 			<div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
@@ -24,7 +27,11 @@ export function Header() {
 					<Activity className="size-5 text-primary" />
 					<span className="font-mono text-sm font-semibold">api-bench</span>
 				</Link>
-				<nav className="flex items-center gap-2">
+				<nav className="flex items-center gap-1">
+					<Button variant="ghost" size="icon" onClick={toggleTheme}>
+						{theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+						<span className="sr-only">Toggle theme</span>
+					</Button>
 					<Button
 						variant="ghost"
 						size="icon"

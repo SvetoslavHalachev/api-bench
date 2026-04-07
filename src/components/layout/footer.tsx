@@ -1,7 +1,7 @@
 export function Footer() {
 	return (
 		<footer className="border-t border-border/50 py-6">
-			<div className="mx-auto flex max-w-5xl items-center justify-between px-6">
+			<div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6">
 				<p className="text-xs text-muted-foreground">
 					Built with TanStack Start + Cloudflare Workers
 				</p>

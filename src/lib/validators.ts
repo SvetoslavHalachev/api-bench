@@ -16,9 +16,20 @@ export const benchmarkOptionsSchema = z.object({
 	timeout: z.number().int().min(1000).max(30000).default(5000),
 })
 
+export const publicBenchmarkOptionsSchema = z.object({
+	concurrency: z.number().int().min(1).max(30).default(10),
+	totalRequests: z.number().int().min(10).max(200).default(100),
+	timeout: z.number().int().min(1000).max(10000).default(5000),
+})
+
 export const benchmarkRequestSchema = z.object({
 	endpoints: z.tuple([endpointConfigSchema, endpointConfigSchema]),
 	options: benchmarkOptionsSchema.default({}),
+})
+
+export const publicBenchmarkRequestSchema = z.object({
+	endpoints: z.tuple([endpointConfigSchema, endpointConfigSchema]),
+	options: publicBenchmarkOptionsSchema.default({}),
 })
 
 export const saveResultSchema = z.object({

@@ -59,7 +59,7 @@ export function ProgressDisplay({ progressA, progressB, onCancel }: ProgressDisp
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle className="flex items-center justify-between">
+				<CardTitle className="flex flex-wrap items-center justify-between gap-2">
 					<div className="flex items-center gap-2">
 						<span className="relative flex size-2">
 							<span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-75" />

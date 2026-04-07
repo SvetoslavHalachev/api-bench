@@ -1,9 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useState } from 'react'
 import { BenchmarkForm } from '~/domains/benchmark/components/benchmark-form'
+import { HistoryPanel } from '~/domains/benchmark/components/history-panel'
 import { ProgressDisplay } from '~/domains/benchmark/components/progress-display'
 import { ResultsComparison } from '~/domains/benchmark/components/results-comparison'
 import { useBenchmarkStream } from '~/domains/benchmark/components/use-benchmark-stream'
 import { ShareButton } from '~/domains/results/components/share-button'
+import type { HistoryEntry } from '~/lib/history'
+import { addToHistory } from '~/lib/history'
 
 export const Route = createFileRoute('/')({
 	component: HomePage,
@@ -11,6 +15,25 @@ export const Route = createFileRoute('/')({
 
 function HomePage() {
 	const bench = useBenchmarkStream()
+	const [prefill, setPrefill] = useState<HistoryEntry | null>(null)
+
+	function handleComplete() {
+		if (bench.lastRequest) {
+			const ep = bench.lastRequest.endpoints
+			addToHistory({
+				id: crypto.randomUUID(),
+				endpointAUrl: ep[0].url,
+				endpointALabel: ep[0].label || '',
+				endpointBUrl: ep[1].url,
+				endpointBLabel: ep[1].label || '',
+				timestamp: Date.now(),
+			})
+		}
+	}
+
+	if (bench.state === 'complete' && bench.resultA && bench.resultB) {
+		handleComplete()
+	}
 
 	return (
 		<div className="mx-auto flex w-full max-w-4xl flex-col gap-6 p-6">
@@ -21,7 +44,12 @@ function HomePage() {
 					shareable results in seconds.
 				</p>
 			</div>
-			<BenchmarkForm onSubmit={bench.start} isRunning={bench.state === 'running'} />
+			<BenchmarkForm
+				onSubmit={bench.start}
+				isRunning={bench.state === 'running'}
+				defaultValues={prefill}
+			/>
+			{bench.state === 'idle' && <HistoryPanel onSelect={setPrefill} />}
 			{bench.state === 'running' && (
 				<ProgressDisplay
 					progressA={bench.progressA}

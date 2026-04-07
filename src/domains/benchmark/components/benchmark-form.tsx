@@ -1,5 +1,5 @@
 import { ChevronDown } from 'lucide-react'
-import { type FormEvent, useState } from 'react'
+import { type FormEvent, useEffect, useState } from 'react'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { Input } from '~/components/ui/input'
@@ -49,6 +49,12 @@ function createEmptyEndpoint(): EndpointFormState {
 interface BenchmarkFormProps {
 	onSubmit: (request: BenchmarkRequest) => void
 	isRunning: boolean
+	defaultValues?: {
+		endpointAUrl: string
+		endpointALabel: string
+		endpointBUrl: string
+		endpointBLabel: string
+	} | null
 }
 
 const HTTP_METHODS: HttpMethod[] = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
@@ -165,13 +171,28 @@ function EndpointInputGroup({
 	)
 }
 
-export function BenchmarkForm({ onSubmit, isRunning }: BenchmarkFormProps) {
+export function BenchmarkForm({ onSubmit, isRunning, defaultValues }: BenchmarkFormProps) {
 	const [endpointA, setEndpointA] = useState(createEmptyEndpoint)
 	const [endpointB, setEndpointB] = useState(createEmptyEndpoint)
 	const [concurrency, setConcurrency] = useState(10)
 	const [totalRequests, setTotalRequests] = useState(100)
 	const [timeout, setTimeout_] = useState(5)
 	const [errors, setErrors] = useState<string[]>([])
+
+	useEffect(() => {
+		if (defaultValues) {
+			setEndpointA((prev) => ({
+				...prev,
+				url: defaultValues.endpointAUrl,
+				label: defaultValues.endpointALabel,
+			}))
+			setEndpointB((prev) => ({
+				...prev,
+				url: defaultValues.endpointBUrl,
+				label: defaultValues.endpointBLabel,
+			}))
+		}
+	}, [defaultValues])
 
 	function buildHeaders(
 		headers: Array<{ key: string; value: string }>,

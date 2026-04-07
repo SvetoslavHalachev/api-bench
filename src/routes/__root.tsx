@@ -11,12 +11,24 @@ import type { ReactNode } from 'react'
 import { Toaster } from 'sonner'
 import { Footer } from '~/components/layout/footer'
 import { Header } from '~/components/layout/header'
+import { ErrorFallback, NotFoundFallback } from '~/components/shared/error-fallback'
 import { TooltipProvider } from '~/components/ui/tooltip'
+import { ThemeProvider } from '~/lib/theme'
 import appCss from '~/styles/app.css?url'
 
 export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient
 }>()({
+	errorComponent: ({ error }) => (
+		<RootDocument>
+			<ErrorFallback message={error instanceof Error ? error.message : undefined} showRetry />
+		</RootDocument>
+	),
+	notFoundComponent: () => (
+		<RootDocument>
+			<NotFoundFallback />
+		</RootDocument>
+	),
 	head: () => ({
 		meta: [
 			{ charSet: 'utf-8' },
@@ -40,16 +52,18 @@ function RootComponent() {
 	const { queryClient } = useRouteContext({ from: '__root__' })
 	return (
 		<QueryClientProvider client={queryClient}>
-			<RootDocument>
-				<Outlet />
-			</RootDocument>
+			<ThemeProvider>
+				<RootDocument>
+					<Outlet />
+				</RootDocument>
+			</ThemeProvider>
 		</QueryClientProvider>
 	)
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 	return (
-		<html lang="en" className="dark">
+		<html lang="en">
 			<head>
 				<HeadContent />
 			</head>
@@ -61,7 +75,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 						<Footer />
 					</div>
 				</TooltipProvider>
-				<Toaster theme="dark" />
+				<Toaster theme="system" />
 				<Scripts />
 			</body>
 		</html>

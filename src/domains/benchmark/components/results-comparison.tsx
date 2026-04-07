@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 import { Button } from '~/components/ui/button'
 import type { EndpointResult } from '../types'
+import { ExportButtons } from './export-buttons'
 import { StatsCard } from './stats-card'
 
 interface WinnerMap {
@@ -50,16 +51,19 @@ export function ResultsComparison({
 
 	return (
 		<div className="flex flex-col gap-6">
-			<div className="flex items-center justify-between">
+			<div className="flex flex-wrap items-center justify-between gap-4">
 				<h2 className="text-base font-semibold">Results</h2>
-				<div className="flex items-center gap-2">
+				<div className="flex flex-wrap items-center gap-2">
+					<ExportButtons resultA={resultA} resultB={resultB} />
 					{actions}
 					{typeof onRunAgain === 'string' ? (
 						<Link to={onRunAgain}>
-							<Button variant="outline">Run Again</Button>
+							<Button variant="outline" size="sm">
+								Run Again
+							</Button>
 						</Link>
 					) : (
-						<Button variant="outline" onClick={onRunAgain}>
+						<Button variant="outline" size="sm" onClick={onRunAgain}>
 							Run Again
 						</Button>
 					)}
