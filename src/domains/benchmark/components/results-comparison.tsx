@@ -1,3 +1,5 @@
+import { Link } from '@tanstack/react-router'
+import type { ReactNode } from 'react'
 import { Button } from '~/components/ui/button'
 import type { EndpointResult } from '../types'
 import { StatsCard } from './stats-card'
@@ -34,19 +36,34 @@ function computeWinners(a: EndpointResult, b: EndpointResult): WinnerMap {
 interface ResultsComparisonProps {
 	resultA: EndpointResult
 	resultB: EndpointResult
-	onRunAgain: () => void
+	onRunAgain: (() => void) | string
+	actions?: ReactNode
 }
 
-export function ResultsComparison({ resultA, resultB, onRunAgain }: ResultsComparisonProps) {
+export function ResultsComparison({
+	resultA,
+	resultB,
+	onRunAgain,
+	actions,
+}: ResultsComparisonProps) {
 	const winners = computeWinners(resultA, resultB)
 
 	return (
 		<div className="flex flex-col gap-6">
 			<div className="flex items-center justify-between">
 				<h2 className="text-base font-semibold">Results</h2>
-				<Button variant="outline" onClick={onRunAgain}>
-					Run Again
-				</Button>
+				<div className="flex items-center gap-2">
+					{actions}
+					{typeof onRunAgain === 'string' ? (
+						<Link to={onRunAgain}>
+							<Button variant="outline">Run Again</Button>
+						</Link>
+					) : (
+						<Button variant="outline" onClick={onRunAgain}>
+							Run Again
+						</Button>
+					)}
+				</div>
 			</div>
 			<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 				<StatsCard result={resultA} tag="a" winners={winners} />

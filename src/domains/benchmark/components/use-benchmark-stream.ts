@@ -10,6 +10,7 @@ interface BenchmarkStreamState {
 	progressB: BenchmarkProgress | null
 	resultA: EndpointResult | null
 	resultB: EndpointResult | null
+	lastRequest: BenchmarkRequest | null
 	errorMsg: string
 	start: (request: BenchmarkRequest) => void
 	cancel: () => void
@@ -65,10 +66,12 @@ export function useBenchmarkStream(): BenchmarkStreamState {
 	const [progressB, setProgressB] = useState<BenchmarkProgress | null>(null)
 	const [resultA, setResultA] = useState<EndpointResult | null>(null)
 	const [resultB, setResultB] = useState<EndpointResult | null>(null)
+	const [lastRequest, setLastRequest] = useState<BenchmarkRequest | null>(null)
 	const [errorMsg, setErrorMsg] = useState('')
 	const abortRef = useRef<AbortController | null>(null)
 
 	async function start(request: BenchmarkRequest) {
+		setLastRequest(request)
 		setState('running')
 		setProgressA(null)
 		setProgressB(null)
@@ -88,7 +91,7 @@ export function useBenchmarkStream(): BenchmarkStreamState {
 			})
 
 			if (!response.ok) {
-				const body = await response.json()
+				const body = (await response.json()) as { message?: string }
 				throw new Error(body.message ?? 'Benchmark request failed')
 			}
 
@@ -124,5 +127,16 @@ export function useBenchmarkStream(): BenchmarkStreamState {
 		setResultB(null)
 	}
 
-	return { state, progressA, progressB, resultA, resultB, errorMsg, start, cancel, reset }
+	return {
+		state,
+		progressA,
+		progressB,
+		resultA,
+		resultB,
+		lastRequest,
+		errorMsg,
+		start,
+		cancel,
+		reset,
+	}
 }

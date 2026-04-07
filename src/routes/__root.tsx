@@ -2,6 +2,7 @@
 import type { QueryClient } from '@tanstack/react-query'
 import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
+import { Toaster } from 'sonner'
 import { Footer } from '~/components/layout/footer'
 import { Header } from '~/components/layout/header'
 import { TooltipProvider } from '~/components/ui/tooltip'
@@ -51,6 +52,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 						<Footer />
 					</div>
 				</TooltipProvider>
+				<Toaster theme="dark" />
 				<Scripts />
 			</body>
 		</html>

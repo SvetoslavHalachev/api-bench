@@ -3,6 +3,7 @@ import { BenchmarkForm } from '~/domains/benchmark/components/benchmark-form'
 import { ProgressDisplay } from '~/domains/benchmark/components/progress-display'
 import { ResultsComparison } from '~/domains/benchmark/components/results-comparison'
 import { useBenchmarkStream } from '~/domains/benchmark/components/use-benchmark-stream'
+import { ShareButton } from '~/domains/results/components/share-button'
 
 export const Route = createFileRoute('/')({
 	component: HomePage,
@@ -33,6 +34,15 @@ function HomePage() {
 					resultA={bench.resultA}
 					resultB={bench.resultB}
 					onRunAgain={bench.reset}
+					actions={
+						bench.lastRequest ? (
+							<ShareButton
+								resultA={bench.resultA}
+								resultB={bench.resultB}
+								config={bench.lastRequest}
+							/>
+						) : undefined
+					}
 				/>
 			)}
 			{bench.state === 'error' && (
