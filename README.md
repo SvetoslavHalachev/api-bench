@@ -1,5 +1,7 @@
 # api-bench
 
+> **[bench.devglory.dev](https://bench.devglory.dev)** — Try it live
+
 Compare two API endpoints side-by-side. Get latency percentiles, throughput metrics, and shareable results in seconds.
 
 ## Features
