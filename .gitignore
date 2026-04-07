@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+.output/
+.vinxi/
+.wrangler/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Drizzle
+drizzle/meta/
+
+# TanStack
+src/routeTree.gen.ts
+
+# Cloudflare
+.dev.vars
+worker-configuration.d.ts
+
+# Claude Code
+.claude/
+
+docs
+.mcp.json
+CLAUDE.md

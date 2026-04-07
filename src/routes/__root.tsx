@@ -1,0 +1,54 @@
+/// <reference types="vite/client" />
+import type { QueryClient } from '@tanstack/react-query'
+import {
+	HeadContent,
+	Outlet,
+	Scripts,
+	createRootRouteWithContext,
+} from '@tanstack/react-router'
+import type { ReactNode } from 'react'
+import appCss from '~/styles/app.css?url'
+
+export const Route = createRootRouteWithContext<{
+	queryClient: QueryClient
+}>()({
+	head: () => ({
+		meta: [
+			{ charSet: 'utf-8' },
+			{
+				name: 'viewport',
+				content: 'width=device-width, initial-scale=1',
+			},
+			{ title: 'api-bench — Side-by-side API benchmarking' },
+			{
+				name: 'description',
+				content:
+					'Compare two API endpoints side-by-side. Get latency percentiles, throughput, and shareable results.',
+			},
+		],
+		links: [{ rel: 'stylesheet', href: appCss }],
+	}),
+	component: RootComponent,
+})
+
+function RootComponent() {
+	return (
+		<RootDocument>
+			<Outlet />
+		</RootDocument>
+	)
+}
+
+function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+	return (
+		<html lang="en" className="dark">
+			<head>
+				<HeadContent />
+			</head>
+			<body className="min-h-screen bg-background text-foreground antialiased">
+				{children}
+				<Scripts />
+			</body>
+		</html>
+	)
+}
