@@ -1,6 +1,12 @@
 /// <reference types="vite/client" />
-import type { QueryClient } from '@tanstack/react-query'
-import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
+import { type QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import {
+	createRootRouteWithContext,
+	HeadContent,
+	Outlet,
+	Scripts,
+	useRouteContext,
+} from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 import { Toaster } from 'sonner'
 import { Footer } from '~/components/layout/footer'
@@ -31,10 +37,13 @@ export const Route = createRootRouteWithContext<{
 })
 
 function RootComponent() {
+	const { queryClient } = useRouteContext({ from: '__root__' })
 	return (
-		<RootDocument>
-			<Outlet />
-		</RootDocument>
+		<QueryClientProvider client={queryClient}>
+			<RootDocument>
+				<Outlet />
+			</RootDocument>
+		</QueryClientProvider>
 	)
 }
 
