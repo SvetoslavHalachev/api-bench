@@ -10,8 +10,8 @@ function HomePage() {
 			<div className="flex flex-col items-center gap-4 text-center">
 				<h1 className="text-4xl font-bold tracking-tight">api-bench</h1>
 				<p className="max-w-md text-lg text-muted-foreground">
-					Compare two API endpoints side-by-side. Get latency percentiles,
-					throughput, and shareable results.
+					Compare two API endpoints side-by-side. Get latency percentiles, throughput, and shareable
+					results.
 				</p>
 			</div>
 			<div className="rounded-lg border border-border/50 bg-card p-8 text-card-foreground shadow-sm">

@@ -21,6 +21,10 @@
 			"style": {
 				"useConst": "error",
 				"noNonNullAssertion": "warn"
+			},
+			"a11y": {
+				"noLabelWithoutControl": "off",
+				"useAnchorContent": "off"
 			}
 		}
 	},

@@ -1,12 +1,10 @@
 /// <reference types="vite/client" />
 import type { QueryClient } from '@tanstack/react-query'
-import {
-	HeadContent,
-	Outlet,
-	Scripts,
-	createRootRouteWithContext,
-} from '@tanstack/react-router'
+import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
+import { Footer } from '~/components/layout/footer'
+import { Header } from '~/components/layout/header'
+import { TooltipProvider } from '~/components/ui/tooltip'
 import appCss from '~/styles/app.css?url'
 
 export const Route = createRootRouteWithContext<{
@@ -46,7 +44,13 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 				<HeadContent />
 			</head>
 			<body className="min-h-screen bg-background text-foreground antialiased">
-				{children}
+				<TooltipProvider>
+					<div className="flex min-h-screen flex-col">
+						<Header />
+						<main className="flex-1">{children}</main>
+						<Footer />
+					</div>
+				</TooltipProvider>
 				<Scripts />
 			</body>
 		</html>
