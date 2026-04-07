@@ -36,6 +36,7 @@ src/routeTree.gen.ts
 # Cloudflare
 .dev.vars
 worker-configuration.d.ts
+wrangler.jsonc
 
 # Claude Code
 .claude/
