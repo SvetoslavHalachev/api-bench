@@ -37,7 +37,7 @@ export const Route = createRootRouteWithContext<{
 		meta: [
 			{ charSet: 'utf-8' },
 			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
-			{ title: 'api-bench — Side-by-side API benchmarking' },
+			{ title: 'API Bench — Side-by-side API benchmarking' },
 			{
 				name: 'description',
 				content:
@@ -46,14 +46,14 @@ export const Route = createRootRouteWithContext<{
 			{ name: 'theme-color', content: '#0d1117' },
 			{ property: 'og:type', content: 'website' },
 			{ property: 'og:url', content: 'https://bench.devglory.dev' },
-			{ property: 'og:title', content: 'api-bench — Side-by-side API benchmarking' },
+			{ property: 'og:title', content: 'API Bench — Side-by-side API benchmarking' },
 			{
 				property: 'og:description',
 				content:
 					'Compare two API endpoints side-by-side. Get latency percentiles, throughput, and shareable results.',
 			},
 			{ name: 'twitter:card', content: 'summary' },
-			{ name: 'twitter:title', content: 'api-bench — Side-by-side API benchmarking' },
+			{ name: 'twitter:title', content: 'API Bench — Side-by-side API benchmarking' },
 			{
 				name: 'twitter:description',
 				content:
@@ -72,7 +72,7 @@ export const Route = createRootRouteWithContext<{
 				children: JSON.stringify({
 					'@context': 'https://schema.org',
 					'@type': 'WebApplication',
-					name: 'api-bench',
+					name: 'API Bench',
 					url: 'https://bench.devglory.dev',
 					description: 'Compare two API endpoints side-by-side with real-time benchmarking.',
 					applicationCategory: 'DeveloperApplication',

@@ -46,7 +46,7 @@ function HomePage() {
 					Open source API benchmarking tool
 				</div>
 				<h1 className="bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
-					Benchmark APIs in seconds
+					API Bench
 				</h1>
 				<p className="max-w-lg text-sm text-muted-foreground sm:text-base">
 					Compare two endpoints side-by-side. Get latency percentiles, throughput metrics, and

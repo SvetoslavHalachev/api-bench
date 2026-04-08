@@ -1,6 +1,6 @@
 {
-  "name": "api-bench",
-  "short_name": "api-bench",
+  "name": "API Bench",
+  "short_name": "API Bench",
   "description": "Compare two API endpoints side-by-side with real-time benchmarking",
   "start_url": "/",
   "display": "standalone",

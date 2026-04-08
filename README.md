@@ -1,4 +1,4 @@
-# api-bench
+# API Bench
 
 > **[bench.devglory.dev](https://bench.devglory.dev)** — Try it live
 

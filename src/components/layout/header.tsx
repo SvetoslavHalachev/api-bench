@@ -1,7 +1,23 @@
 import { Link } from '@tanstack/react-router'
-import { Activity, Moon, Sun } from 'lucide-react'
+import { Moon, Sun } from 'lucide-react'
 import { Button } from '~/components/ui/button'
 import { useTheme } from '~/lib/theme'
+
+function Logo({ className }: { className?: string }) {
+	return (
+		<svg viewBox="0 0 32 32" fill="none" className={className} role="img" aria-label="API Bench">
+			<rect width="32" height="32" rx="6" className="fill-primary" />
+			<path
+				d="M8 22V14l4-4 4 6 4-8 4 12"
+				className="stroke-primary-foreground"
+				strokeWidth="2.5"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<circle cx="20" cy="8" r="1.5" className="fill-emerald-400" />
+		</svg>
+	)
+}
 
 function GitHubIcon({ className }: { className?: string }) {
 	return (
@@ -24,8 +40,8 @@ export function Header() {
 		<header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-sm">
 			<div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
 				<Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-					<Activity className="size-5 text-primary" />
-					<span className="font-mono text-sm font-semibold tracking-tight">api-bench</span>
+					<Logo className="size-6" />
+					<span className="font-mono text-sm font-semibold tracking-tight">API Bench</span>
 				</Link>
 				<nav className="flex items-center gap-1">
 					<Button variant="ghost" size="icon" onClick={toggleTheme}>

@@ -13,12 +13,12 @@ export const Route = createFileRoute('/results/$id')({
 		const labelB = row?.endpointBLabel ?? 'Endpoint B'
 		return {
 			meta: [
-				{ title: `api-bench results: ${labelA} vs ${labelB}` },
+				{ title: `API Bench results: ${labelA} vs ${labelB}` },
 				{
 					name: 'description',
 					content: `Benchmark comparison of ${labelA} vs ${labelB}`,
 				},
-				{ property: 'og:title', content: `api-bench: ${labelA} vs ${labelB}` },
+				{ property: 'og:title', content: `API Bench: ${labelA} vs ${labelB}` },
 				{
 					property: 'og:description',
 					content: `Benchmark comparison of ${labelA} vs ${labelB}`,
