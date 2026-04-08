@@ -24,15 +24,9 @@ export const Route = createRootRouteWithContext<{
 		return { theme }
 	},
 	errorComponent: ({ error }) => (
-		<RootDocument initialTheme="dark">
-			<ErrorFallback message={error instanceof Error ? error.message : undefined} showRetry />
-		</RootDocument>
+		<ErrorFallback message={error instanceof Error ? error.message : undefined} showRetry />
 	),
-	notFoundComponent: () => (
-		<RootDocument initialTheme="dark">
-			<NotFoundFallback />
-		</RootDocument>
-	),
+	notFoundComponent: () => <NotFoundFallback />,
 	head: () => ({
 		meta: [
 			{ charSet: 'utf-8' },
