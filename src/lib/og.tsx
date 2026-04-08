@@ -57,7 +57,14 @@ function OgImage({ title, subtitle, stats }: OgImageProps) {
 					marginBottom: '24px',
 				}}
 			>
-				<svg width="48" height="48" viewBox="0 0 32 32" fill="none">
+				<svg
+					width="48"
+					height="48"
+					viewBox="0 0 32 32"
+					fill="none"
+					role="img"
+					aria-label="API Bench"
+				>
 					<rect width="32" height="32" rx="6" fill="#e6edf3" />
 					<path
 						d="M8 22V14l4-4 4 6 4-8 4 12"

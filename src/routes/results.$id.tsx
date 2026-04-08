@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { Button } from '~/components/ui/button'
+import { createFileRoute } from '@tanstack/react-router'
+import { ErrorFallback } from '~/components/shared/error-fallback'
 import { ResultsComparison } from '~/domains/benchmark/components/results-comparison'
 import type { EndpointResult } from '~/domains/benchmark/types'
 import { resultQuery } from '~/domains/results/queries'
@@ -31,15 +31,16 @@ export const Route = createFileRoute('/results/$id')({
 		}
 	},
 	errorComponent: ({ error }) => (
-		<div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-6 p-6">
-			<h1 className="text-xl font-semibold tracking-tight">Result not found</h1>
-			<p className="text-sm text-muted-foreground">
-				{error.message || 'This benchmark result does not exist or has been deleted.'}
-			</p>
-			<Link to="/">
-				<Button variant="outline">Back to Home</Button>
-			</Link>
-		</div>
+		<ErrorFallback
+			title="Result not found"
+			message={error.message || 'This benchmark result does not exist or has been deleted.'}
+		/>
+	),
+	notFoundComponent: () => (
+		<ErrorFallback
+			title="Result not found"
+			message="This benchmark result does not exist or may have expired."
+		/>
 	),
 	component: ResultPage,
 })

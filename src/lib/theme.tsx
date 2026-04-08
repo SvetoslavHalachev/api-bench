@@ -61,9 +61,5 @@ export function useTheme(): ThemeContextValue {
 	return use(ThemeContext)
 }
 
-/**
- * Blocking inline script to prevent theme flash (FOUC).
- * This is a static string with no user input — safe for dangerouslySetInnerHTML.
- * biome-ignore lint/security/noDangerouslySetInnerHtml: static theme script, no user input
- */
+/** Blocking inline script to prevent theme flash (FOUC). Static string, no user input. */
 export const themeScript = `(function(){try{var c=document.cookie.match(/(?:^|; )api-bench-theme=([^;]*)/);var t=c?c[1]:'dark';if(t==='dark'){document.documentElement.classList.add('dark')}else{document.documentElement.classList.remove('dark')}}catch(e){}})()`
