@@ -32,3 +32,16 @@ jobs:
 
       - name: Type Check
         run: pnpm type-check
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: quality
+    runs-on: ubuntu-latest
+    permissions:
+      deployments: write
+    environment:
+      name: production
+      url: https://bench.devglory.dev
+    steps:
+      - name: Mark deployment
+        run: echo "Deployed to bench.devglory.dev via Cloudflare Workers Builds"
