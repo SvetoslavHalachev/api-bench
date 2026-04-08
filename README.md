@@ -4,6 +4,10 @@
 
 Compare two API endpoints side-by-side. Get latency percentiles, throughput metrics, and shareable results in seconds.
 
+<p align="center">
+  <img src="public/demo.gif" alt="API Bench demo" width="100%" />
+</p>
+
 ## Features
 
 - **Side-by-side benchmarking** — run configurable concurrent requests against two endpoints
