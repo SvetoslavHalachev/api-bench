@@ -2,12 +2,36 @@ import { z } from 'zod'
 
 export const httpMethodSchema = z.enum(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
 
+function isPrivateUrl(raw: string): boolean {
+	try {
+		const u = new URL(raw)
+		if (u.protocol !== 'https:' && u.protocol !== 'http:') return true
+		const h = u.hostname
+		if (h === 'localhost' || h === '::1' || h === '0.0.0.0') return true
+		if (/^127\./.test(h)) return true
+		if (/^10\./.test(h)) return true
+		if (/^172\.(1[6-9]|2\d|3[01])\./.test(h)) return true
+		if (/^192\.168\./.test(h)) return true
+		if (/^169\.254\./.test(h)) return true
+		return false
+	} catch {
+		return true
+	}
+}
+
 export const endpointConfigSchema = z.object({
-	url: z.string().url('Must be a valid URL'),
+	url: z
+		.string()
+		.url('Must be a valid URL')
+		.refine((v) => !isPrivateUrl(v), 'URL must not target internal or private network addresses'),
 	label: z.string().max(50).optional(),
 	method: httpMethodSchema.default('GET'),
-	headers: z.record(z.string()).optional(),
-	body: z.string().optional(),
+	headers: z
+		.record(z.string().max(1000))
+		.refine((h) => Object.keys(h).length <= 20, 'Too many headers')
+		.refine((h) => Object.keys(h).every((k) => /^[\w-]+$/.test(k)), 'Invalid header name')
+		.optional(),
+	body: z.string().max(10_000).optional(),
 })
 
 export const benchmarkOptionsSchema = z.object({
@@ -33,9 +57,13 @@ export const publicBenchmarkRequestSchema = z.object({
 })
 
 export const saveResultSchema = z.object({
-	config: benchmarkRequestSchema,
-	resultA: z.record(z.unknown()),
-	resultB: z.record(z.unknown()),
+	config: publicBenchmarkRequestSchema,
+	resultA: z
+		.record(z.unknown())
+		.refine((v) => JSON.stringify(v).length < 100_000, 'Result too large'),
+	resultB: z
+		.record(z.unknown())
+		.refine((v) => JSON.stringify(v).length < 100_000, 'Result too large'),
 })
 
 export type HttpMethod = z.infer<typeof httpMethodSchema>

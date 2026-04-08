@@ -16,13 +16,18 @@ export const Route = createFileRoute('/api/og/$id')({
 					.get()
 
 				if (!result) {
-					return new Response('Not found', { status: 404 })
+					return new Response('Not found', {
+						status: 404,
+						headers: { 'Cache-Control': 'public, max-age=60' },
+					})
 				}
 
-				const resultA = result.resultA as { latency: { avg: number } }
-				const resultB = result.resultB as { latency: { avg: number } }
-				const avgA = resultA.latency.avg
-				const avgB = resultB.latency.avg
+				const resultA = result.resultA as Record<string, unknown> | null
+				const resultB = result.resultB as Record<string, unknown> | null
+				const latA = resultA?.latency as Record<string, unknown> | undefined
+				const latB = resultB?.latency as Record<string, unknown> | undefined
+				const avgA = typeof latA?.avg === 'number' ? latA.avg : 0
+				const avgB = typeof latB?.avg === 'number' ? latB.avg : 0
 
 				const png = await generateOgImage({
 					title: `${result.endpointALabel} vs ${result.endpointBLabel}`,

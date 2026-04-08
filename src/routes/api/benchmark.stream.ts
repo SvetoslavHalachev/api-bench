@@ -7,6 +7,14 @@ export const Route = createFileRoute('/api/benchmark/stream')({
 	server: {
 		handlers: {
 			POST: async ({ request }) => {
+				const contentLength = Number(request.headers.get('content-length') ?? 0)
+				if (contentLength > 64 * 1024) {
+					return new Response(
+						JSON.stringify({ error: { code: 'PAYLOAD_TOO_LARGE', message: 'Request too large' } }),
+						{ status: 413, headers: { 'Content-Type': 'application/json' } },
+					)
+				}
+
 				let parsed: ReturnType<typeof publicBenchmarkRequestSchema.parse>
 				try {
 					const body = await request.json()

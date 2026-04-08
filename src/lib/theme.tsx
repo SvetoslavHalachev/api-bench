@@ -47,7 +47,7 @@ export function ThemeProvider({
 		setThemeState(next)
 		applyThemeClass(next)
 		// biome-ignore lint/suspicious/noDocumentCookie: simple cookie persistence
-		document.cookie = `${COOKIE_NAME}=${next};path=/;max-age=${COOKIE_MAX_AGE};samesite=lax`
+		document.cookie = `${COOKIE_NAME}=${next};path=/;max-age=${COOKIE_MAX_AGE};samesite=lax;secure`
 	}
 
 	useEffect(() => {
