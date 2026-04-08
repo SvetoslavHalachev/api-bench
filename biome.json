@@ -22,6 +22,9 @@
 				"useConst": "error",
 				"noNonNullAssertion": "warn"
 			},
+			"suspicious": {
+				"noArrayIndexKey": "off"
+			},
 			"a11y": {
 				"noLabelWithoutControl": "off",
 				"useAnchorContent": "off"

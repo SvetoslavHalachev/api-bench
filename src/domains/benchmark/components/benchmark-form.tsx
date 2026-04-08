@@ -12,6 +12,7 @@ import {
 	SelectValue,
 } from '~/components/ui/select'
 import { Separator } from '~/components/ui/separator'
+import { Slider } from '~/components/ui/slider'
 import { cn } from '~/lib/utils'
 import { type BenchmarkRequest, benchmarkRequestSchema, type HttpMethod } from '~/lib/validators'
 
@@ -269,38 +270,44 @@ export function BenchmarkForm({ onSubmit, isRunning, defaultValues }: BenchmarkF
 					<Separator />
 					<div className="flex flex-col gap-4">
 						<span className="text-sm font-medium">Options</span>
-						<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-							<div className="flex flex-col gap-1.5">
-								<Label htmlFor="concurrency">Concurrency (1-50)</Label>
-								<Input
-									id="concurrency"
-									type="number"
+						<div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+							<div className="flex flex-col gap-3">
+								<div className="flex items-center justify-between">
+									<Label>Concurrency</Label>
+									<span className="font-mono text-xs text-muted-foreground">{concurrency}</span>
+								</div>
+								<Slider
 									min={1}
 									max={50}
-									value={concurrency}
-									onChange={(e) => setConcurrency(Number(e.target.value))}
+									step={1}
+									value={[concurrency]}
+									onValueChange={(v) => setConcurrency(Array.isArray(v) ? v[0] : v)}
 								/>
 							</div>
-							<div className="flex flex-col gap-1.5">
-								<Label htmlFor="totalRequests">Requests (10-500)</Label>
-								<Input
-									id="totalRequests"
-									type="number"
+							<div className="flex flex-col gap-3">
+								<div className="flex items-center justify-between">
+									<Label>Requests</Label>
+									<span className="font-mono text-xs text-muted-foreground">{totalRequests}</span>
+								</div>
+								<Slider
 									min={10}
 									max={500}
-									value={totalRequests}
-									onChange={(e) => setTotalRequests(Number(e.target.value))}
+									step={10}
+									value={[totalRequests]}
+									onValueChange={(v) => setTotalRequests(Array.isArray(v) ? v[0] : v)}
 								/>
 							</div>
-							<div className="flex flex-col gap-1.5">
-								<Label htmlFor="timeout">Timeout in seconds (1-30)</Label>
-								<Input
-									id="timeout"
-									type="number"
+							<div className="flex flex-col gap-3">
+								<div className="flex items-center justify-between">
+									<Label>Timeout</Label>
+									<span className="font-mono text-xs text-muted-foreground">{timeout}s</span>
+								</div>
+								<Slider
 									min={1}
 									max={30}
-									value={timeout}
-									onChange={(e) => setTimeout_(Number(e.target.value))}
+									step={1}
+									value={[timeout]}
+									onValueChange={(v) => setTimeout_(Array.isArray(v) ? v[0] : v)}
 								/>
 							</div>
 						</div>
