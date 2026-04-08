@@ -7,10 +7,11 @@ import { resultQuery } from '~/domains/results/queries'
 
 export const Route = createFileRoute('/results/$id')({
 	loader: ({ context, params }) => context.queryClient.ensureQueryData(resultQuery(params.id)),
-	head: ({ loaderData }) => {
+	head: ({ loaderData, params }) => {
 		const row = loaderData as { endpointALabel?: string; endpointBLabel?: string } | undefined
 		const labelA = row?.endpointALabel ?? 'Endpoint A'
 		const labelB = row?.endpointBLabel ?? 'Endpoint B'
+		const ogImage = `https://bench.devglory.dev/api/og/${params.id}`
 		return {
 			meta: [
 				{ title: `API Bench results: ${labelA} vs ${labelB}` },
@@ -23,6 +24,9 @@ export const Route = createFileRoute('/results/$id')({
 					property: 'og:description',
 					content: `Benchmark comparison of ${labelA} vs ${labelB}`,
 				},
+				{ property: 'og:image', content: ogImage },
+				{ name: 'twitter:card', content: 'summary_large_image' },
+				{ name: 'twitter:image', content: ogImage },
 			],
 		}
 	},

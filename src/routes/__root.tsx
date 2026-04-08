@@ -52,7 +52,9 @@ export const Route = createRootRouteWithContext<{
 				content:
 					'Compare two API endpoints side-by-side. Get latency percentiles, throughput, and shareable results.',
 			},
-			{ name: 'twitter:card', content: 'summary' },
+			{ property: 'og:image', content: 'https://bench.devglory.dev/api/og' },
+			{ name: 'twitter:card', content: 'summary_large_image' },
+			{ name: 'twitter:image', content: 'https://bench.devglory.dev/api/og' },
 			{ name: 'twitter:title', content: 'API Bench — Side-by-side API benchmarking' },
 			{
 				name: 'twitter:description',
