@@ -13,19 +13,23 @@ import { Footer } from '~/components/layout/footer'
 import { Header } from '~/components/layout/header'
 import { ErrorFallback, NotFoundFallback } from '~/components/shared/error-fallback'
 import { TooltipProvider } from '~/components/ui/tooltip'
-import { ThemeProvider } from '~/lib/theme'
+import { getThemeFn, type Theme, ThemeProvider, themeScript } from '~/lib/theme'
 import appCss from '~/styles/app.css?url'
 
 export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient
 }>()({
+	beforeLoad: async () => {
+		const theme = await getThemeFn()
+		return { theme }
+	},
 	errorComponent: ({ error }) => (
-		<RootDocument>
+		<RootDocument initialTheme="dark">
 			<ErrorFallback message={error instanceof Error ? error.message : undefined} showRetry />
 		</RootDocument>
 	),
 	notFoundComponent: () => (
-		<RootDocument>
+		<RootDocument initialTheme="dark">
 			<NotFoundFallback />
 		</RootDocument>
 	),
@@ -49,11 +53,11 @@ export const Route = createRootRouteWithContext<{
 })
 
 function RootComponent() {
-	const { queryClient } = useRouteContext({ from: '__root__' })
+	const { queryClient, theme } = useRouteContext({ from: '__root__' })
 	return (
 		<QueryClientProvider client={queryClient}>
-			<ThemeProvider>
-				<RootDocument>
+			<ThemeProvider initialTheme={theme}>
+				<RootDocument initialTheme={theme}>
 					<Outlet />
 				</RootDocument>
 			</ThemeProvider>
@@ -61,11 +65,20 @@ function RootComponent() {
 	)
 }
 
-function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+function RootDocument({
+	children,
+	initialTheme = 'dark',
+}: Readonly<{ children: ReactNode; initialTheme?: Theme }>) {
 	return (
-		<html lang="en">
+		<html
+			lang="en"
+			className={initialTheme === 'dark' ? 'dark' : undefined}
+			suppressHydrationWarning
+		>
 			<head>
 				<HeadContent />
+				{/* biome-ignore lint/security/noDangerouslySetInnerHtml: static theme script, no user input */}
+				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
 			</head>
 			<body className="min-h-screen bg-background text-foreground antialiased">
 				<TooltipProvider>
@@ -75,7 +88,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 						<Footer />
 					</div>
 				</TooltipProvider>
-				<Toaster theme="system" />
+				<Toaster theme={initialTheme} />
 				<Scripts />
 			</body>
 		</html>
