@@ -21,11 +21,11 @@ export function Header() {
 	const { theme, toggleTheme } = useTheme()
 
 	return (
-		<header className="border-b border-border/50">
-			<div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-				<Link to="/" className="flex items-center gap-2">
+		<header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-sm">
+			<div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
+				<Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
 					<Activity className="size-5 text-primary" />
-					<span className="font-mono text-sm font-semibold">api-bench</span>
+					<span className="font-mono text-sm font-semibold tracking-tight">api-bench</span>
 				</Link>
 				<nav className="flex items-center gap-1">
 					<Button variant="ghost" size="icon" onClick={toggleTheme}>

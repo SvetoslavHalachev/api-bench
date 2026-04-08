@@ -77,7 +77,7 @@ function MetricRow({
 
 export function StatsCard({ result, tag, winners }: StatsCardProps) {
 	return (
-		<Card>
+		<Card className="transition-shadow hover:shadow-md">
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
 					<span>{result.label}</span>
@@ -86,6 +86,10 @@ export function StatsCard({ result, tag, winners }: StatsCardProps) {
 					</Badge>
 				</CardTitle>
 				<div className="truncate font-mono text-xs text-muted-foreground">{result.url}</div>
+				<div className="mt-2 flex items-baseline gap-1">
+					<span className="font-mono text-2xl font-bold">{formatMs(result.latency.avg)}</span>
+					<span className="text-xs text-muted-foreground">avg latency</span>
+				</div>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-4">
 				<div className="flex flex-col gap-2">

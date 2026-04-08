@@ -36,18 +36,51 @@ export const Route = createRootRouteWithContext<{
 	head: () => ({
 		meta: [
 			{ charSet: 'utf-8' },
-			{
-				name: 'viewport',
-				content: 'width=device-width, initial-scale=1',
-			},
+			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
 			{ title: 'api-bench — Side-by-side API benchmarking' },
 			{
 				name: 'description',
 				content:
 					'Compare two API endpoints side-by-side. Get latency percentiles, throughput, and shareable results.',
 			},
+			{ name: 'theme-color', content: '#0d1117' },
+			{ property: 'og:type', content: 'website' },
+			{ property: 'og:url', content: 'https://bench.devglory.dev' },
+			{ property: 'og:title', content: 'api-bench — Side-by-side API benchmarking' },
+			{
+				property: 'og:description',
+				content:
+					'Compare two API endpoints side-by-side. Get latency percentiles, throughput, and shareable results.',
+			},
+			{ name: 'twitter:card', content: 'summary' },
+			{ name: 'twitter:title', content: 'api-bench — Side-by-side API benchmarking' },
+			{
+				name: 'twitter:description',
+				content:
+					'Compare two API endpoints side-by-side. Get latency percentiles, throughput, and shareable results.',
+			},
 		],
-		links: [{ rel: 'stylesheet', href: appCss }],
+		links: [
+			{ rel: 'stylesheet', href: appCss },
+			{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+			{ rel: 'manifest', href: '/site.webmanifest' },
+			{ rel: 'canonical', href: 'https://bench.devglory.dev' },
+		],
+		scripts: [
+			{
+				type: 'application/ld+json',
+				children: JSON.stringify({
+					'@context': 'https://schema.org',
+					'@type': 'WebApplication',
+					name: 'api-bench',
+					url: 'https://bench.devglory.dev',
+					description: 'Compare two API endpoints side-by-side with real-time benchmarking.',
+					applicationCategory: 'DeveloperApplication',
+					operatingSystem: 'Any',
+					offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+				}),
+			},
+		],
 	}),
 	component: RootComponent,
 })

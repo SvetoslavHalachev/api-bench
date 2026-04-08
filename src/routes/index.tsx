@@ -36,12 +36,21 @@ function HomePage() {
 	}
 
 	return (
-		<div className="mx-auto flex w-full max-w-4xl flex-col gap-6 p-6">
-			<div className="flex flex-col items-center gap-2 py-6 text-center">
-				<h1 className="text-xl font-semibold tracking-tight">api-bench</h1>
-				<p className="max-w-md text-sm text-muted-foreground">
-					Compare two API endpoints side-by-side. Get latency percentiles, throughput metrics, and
-					shareable results in seconds.
+		<div className="mx-auto flex w-full max-w-4xl flex-col gap-8 p-6">
+			<div className="flex flex-col items-center gap-3 py-8 text-center">
+				<div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-muted/50 px-3 py-1 text-xs text-muted-foreground">
+					<span className="relative flex size-1.5">
+						<span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+						<span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
+					</span>
+					Open source API benchmarking tool
+				</div>
+				<h1 className="bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
+					Benchmark APIs in seconds
+				</h1>
+				<p className="max-w-lg text-sm text-muted-foreground sm:text-base">
+					Compare two endpoints side-by-side. Get latency percentiles, throughput metrics, and
+					shareable results — all from the edge.
 				</p>
 			</div>
 			<BenchmarkForm
@@ -51,35 +60,39 @@ function HomePage() {
 			/>
 			{bench.state === 'idle' && <HistoryPanel onSelect={setPrefill} />}
 			{bench.state === 'running' && (
-				<ProgressDisplay
-					progressA={bench.progressA}
-					progressB={bench.progressB}
-					onCancel={bench.cancel}
-				/>
+				<div className="animate-fade-in">
+					<ProgressDisplay
+						progressA={bench.progressA}
+						progressB={bench.progressB}
+						onCancel={bench.cancel}
+					/>
+				</div>
 			)}
 			{bench.state === 'complete' && bench.resultA && bench.resultB && (
-				<ResultsComparison
-					resultA={bench.resultA}
-					resultB={bench.resultB}
-					onRunAgain={bench.reset}
-					actions={
-						bench.lastRequest ? (
-							<ShareButton
-								resultA={bench.resultA}
-								resultB={bench.resultB}
-								config={bench.lastRequest}
-							/>
-						) : undefined
-					}
-				/>
+				<div className="animate-slide-up">
+					<ResultsComparison
+						resultA={bench.resultA}
+						resultB={bench.resultB}
+						onRunAgain={bench.reset}
+						actions={
+							bench.lastRequest ? (
+								<ShareButton
+									resultA={bench.resultA}
+									resultB={bench.resultB}
+									config={bench.lastRequest}
+								/>
+							) : undefined
+						}
+					/>
+				</div>
 			)}
 			{bench.state === 'error' && (
-				<div className="flex flex-col items-center gap-4 rounded-lg border border-red-500/50 bg-red-500/10 p-6">
-					<p className="text-sm text-red-500">{bench.errorMsg}</p>
+				<div className="animate-fade-in flex flex-col items-center gap-4 rounded-lg border border-destructive/50 bg-destructive/5 p-6">
+					<p className="text-sm text-destructive">{bench.errorMsg}</p>
 					<button
 						type="button"
 						onClick={bench.reset}
-						className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
+						className="text-sm text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"
 					>
 						Try again
 					</button>

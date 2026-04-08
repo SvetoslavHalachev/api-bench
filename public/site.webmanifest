@@ -1,0 +1,16 @@
+{
+  "name": "api-bench",
+  "short_name": "api-bench",
+  "description": "Compare two API endpoints side-by-side with real-time benchmarking",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#58a6ff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
